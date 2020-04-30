@@ -7,3 +7,13 @@
 <p>Сначала необходимо создать экземпляр класса QueryBuilder:</p>
 
 <pre>$qb = QueryBuilder::<b>getInstance</b>(PDO $pdo);</pre>
+
+
+<h3>getAll</h3>
+<p>Метод позволяет получить все записи указанной таблицы.</p>
+
+<pre>
+$qb->getAll(
+    'table'         <span class="pl-c">// имя таблицы</span>
+);
+</pre>
