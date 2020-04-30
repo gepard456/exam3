@@ -75,7 +75,7 @@ $validator
 
 <pre>
     ->passed();     <span class="pl-c">// true - валидация пройдения, false - валидация не пройдена</span>
-<.pre>
+</pre>
 
 
 <h3>errors</h3>
@@ -84,4 +84,4 @@ $validator
 
 <pre>
     ->errors();
-<.pre>
+</pre>
