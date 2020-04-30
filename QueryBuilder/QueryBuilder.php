@@ -32,25 +32,7 @@ class QueryBuilder
         return self::$instance;
     }
 
-    /**
-     * string $table - название таблицы
-     * return QueryBuilder | false - экземпляр данного класса QueryBuilder, false - в случае ошибки
-     */
-    public function getAll($table)
-    {
-        $sql = "SELECT * FROM $table";
-        if(!$this->query($sql)->error())
-            return $this;
-
-        return false;
-    }
-
-    /**
-     * string $sql - SQL-запрос с плейсхолдерами
-     * array $params - массив с параметрами для плейсхолдеров
-     * return QueryBuilder - экземпляр данного класса QueryBuilder
-     */
-    public function query($sql, $params = [])
+    private function query($sql, $params = [])
     {
         $this->error = false;
         $this->query = $this->pdo->prepare($sql);
@@ -78,13 +60,52 @@ class QueryBuilder
         return $this;
     }
 
+    private function action($action, $table, $where = [])
+    {
+        if( count($where) === 3 )
+        {
+            $operators = ['=', '>', '<', '>=', '<='];
+
+            $field = $where[0];
+            $operator = $where[1];
+            $value = $where[2];
+
+            if( in_array($operator, $operators) )
+            {
+                $sql = "$action FROM $table WHERE $field $operator ?";
+
+                if( !$this->query($sql, [$value])->error() )
+                {
+                    return $this;
+                }
+            }
+        }
+
+        return false;
+
+    }
 
     /**
-     * return bool - true есть ошибка, false нет ошибки
+     * string $table - название таблицы
+     * return QueryBuilder | false - экземпляр данного класса QueryBuilder, false - в случае ошибки
      */
-    public function error()
+    public function getAll($table)
     {
-        return $this->error;
+        $sql = "SELECT * FROM $table";
+        if(!$this->query($sql)->error())
+            return $this;
+
+        return false;
+    }
+
+    /**
+     * string $table - название таблицы
+     * array $where - условие запроса
+     * return QueryBuilder | false - экземпляр данного класса QueryBuilder, false - в случае ошибки
+     */
+    public function get($table, $where = [])
+    {
+        return $this->action("SELECT *", $table, $where);
     }
 
     /**
@@ -116,50 +137,9 @@ class QueryBuilder
      * array $where - условие запроса
      * return QueryBuilder | false - экземпляр данного класса QueryBuilder, false - в случае ошибки
      */
-    public function get($table, $where = [])
-    {
-        return $this->action("SELECT *", $table, $where);
-    }
-
-    /**
-     * string $table - название таблицы
-     * array $where - условие запроса
-     * return QueryBuilder | false - экземпляр данного класса QueryBuilder, false - в случае ошибки
-     */
     public function delete($table, $where = [])
     {
         return $this->action("DELETE", $table, $where);
-    }
-
-    /**
-     * string $action - действие запроса
-     * string $table - название таблицы
-     * array $where - условие запроса
-     * return QueryBuilder | false - экземпляр данного класса QueryBuilder, false - в случае ошибки
-     */
-    public function action($action, $table, $where = [])
-    {
-        if( count($where) === 3 )
-        {
-            $operators = ['=', '>', '<', '>=', '<='];
-
-            $field = $where[0];
-            $operator = $where[1];
-            $value = $where[2];
-
-            if( in_array($operator, $operators) )
-            {
-                $sql = "$action FROM $table WHERE $field $operator ?";
-
-                if( !$this->query($sql, [$value])->error() )
-                {
-                    return $this;
-                }
-            }
-        }
-
-        return false;
-
     }
 
     /**
@@ -210,5 +190,13 @@ class QueryBuilder
         }
 
         return false;
+    }
+
+    /**
+     * return bool - true есть ошибка, false нет ошибки
+     */
+    public function error()
+    {
+        return $this->error;
     }
 }
