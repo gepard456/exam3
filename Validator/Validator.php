@@ -11,6 +11,11 @@ class Validator
     {
         $this->db = $qb;
     }
+    
+    private function addError($error)
+    {
+        $this->errors[] = $error;
+    }
 
     /**
      * array $source - массив данных, который необходимо проверить
@@ -71,11 +76,11 @@ class Validator
     }
 
     /**
-     * string $error - сообщение об ошибке
+     * return bool - true валидация пройдения, false валидация не пройдена
      */
-    public function addError($error)
+    public function passed()
     {
-        $this->errors[] = $error;
+        return $this->passed;
     }
 
     /**
@@ -84,13 +89,5 @@ class Validator
     public function errors()
     {
         return $this->errors;
-    }
-
-    /**
-     * return bool - true валидация пройдения, false валидация не пройдена
-     */
-    public function passed()
-    {
-        return $this->passed;
     }
 }
