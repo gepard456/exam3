@@ -22,6 +22,6 @@ Router::execute(
         "/"         =>  "controllers/homepage.php",
         "/about"    =>  "controllers/about.php"
     ],
-    "controllers/about.php"                             <span class="pl-c">// путь к файлу с ошибкой 404</span>
+    "controllers/404.php"                             <span class="pl-c">// путь к файлу с ошибкой 404</span>
 );
 </pre>
