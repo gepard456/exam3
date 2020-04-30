@@ -5,3 +5,6 @@
 
 <h3>Построение запросов</h3>
 <p>Сначала необходимо создать экземпляр класса QueryBuilder:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">$</span>qb</span> = <span class="pl-s1"><span class="pl-c1"></span>QueryBuilder</span>::<span class="pl-en">getInstance</span>(PDO <span class="pl-c1">$</span>pdo);
+</pre></div>
