@@ -2,17 +2,17 @@
 
 class Flash
 {
-    protected static function get($key)
+    private static function get($key)
     {
         return $_SESSION[$key];
     }
 
-    protected static function exists($key)
+    private static function exists($key)
     {
         return (isset($_SESSION[$key])) ? true : false;
     }
 
-    protected static function delete($key)
+    private static function delete($key)
     {
         if(self::exists($key))
             unset($_SESSION[$key]);
