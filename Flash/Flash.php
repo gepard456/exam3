@@ -2,41 +2,41 @@
 
 class Flash
 {
-    protected static function get($name)
+    protected static function get($key)
     {
-        return $_SESSION[$name];
+        return $_SESSION[$key];
     }
 
-    protected static function exists($name)
+    protected static function exists($key)
     {
-        return (isset($_SESSION[$name])) ? true : false;
+        return (isset($_SESSION[$key])) ? true : false;
     }
 
-    protected static function delete($name)
+    protected static function delete($key)
     {
-        if(self::exists($name))
-            unset($_SESSION[$name]);
+        if(self::exists($key))
+            unset($_SESSION[$key]);
     }
 
     /**
-     * string $name - ключ к сообщению
+     * string $key - ключ к сообщению
      * string $value - сообщение
      */
-    public static function set($name, $value = '')
+    public static function set($key, $value = '')
     {
-       $_SESSION[$name] = $value;
+       $_SESSION[$key] = $value;
     }
 
     /**
-     * string $name - ключ к сообщению
+     * string $key - ключ к сообщению
      * return string - сообщение
      */
-    public static function show($name)
+    public static function show($key)
     {
-        if( self::exists($name) && self::get($name) !== '' )
+        if( self::exists($key) && self::get($key) !== '' )
         {
-            $message = self::get($name);
-            self::delete($name);
+            $message = self::get($key);
+            self::delete($key);
             return $message;
         }
     }
