@@ -1,13 +1,14 @@
 <?php
 
-class Router{
-
+class Router
+{
     private function __construct() {}
     
     private function __clone() {}
 
     /**
      * array $routes - массив соответствий адресов и путей подключаемых файлов
+     * string $path404 - путь к файлу с ошибкой 404
      */
     public static function execute($routes, $path404)
     {

@@ -2,6 +2,10 @@
 
 class Flash
 {
+    private function __construct() {}
+    
+    private function __clone() {}
+
     private static function get($key)
     {
         return $_SESSION[$key];
